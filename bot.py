@@ -1,22 +1,48 @@
 import json
-from flask import Flask, request
+import jwt
+import os
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
 @app.route('/callback', methods=['POST'])
 def callback():
-    # Capture the query parameters
     try:
         token = request.args.get('token')  # Example: ?token=jsjsj...
-        #print(token)
     except Exception:
-        continue
+        return jsonify({'message': 'Token not found'}), 400
+
     # Process the callback data from POST request
     callback_data = request.json  # Assuming the callback data is in JSON format
+
     print("Received Callback Data:")
-    
     print(json.dumps(callback_data, indent=2))
-    print(f"Token: {token}")
+
+    # Replace 'your_secret_key_here' with your actual secret key
+    secret = '$2y$10$hBbAZo2GfSSvyqAyV2SaqOfYewgYpfR1O19gIh4SqyGWdmySZYPuS'
+
+    if token:
+        try:
+            result = jwt.decode(token, secret, algorithms=['HS256'])
+            result = dict(result)  # Convert to a dictionary
+
+            print(f"Token: {token}")
+            print(json.dumps(result, indent=2))
+
+            if result.get('status') == 'success':
+                # Successful transaction
+                print("Successful transaction")
+
+            if result.get('status') == 'failed':
+                # Failed transaction and its reason
+                reason = result.get('msg')
+                print(f"Failed transaction. Reason: {reason}")
+
+        except jwt.ExpiredSignatureError:
+            print("Token has expired")
+        except jwt.InvalidTokenError:
+            print("Invalid token")
+
     # Here, you can add your logic to handle the callback data
 
     return jsonify({'message': 'Callback Received'})
