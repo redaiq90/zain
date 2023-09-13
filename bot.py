@@ -12,10 +12,11 @@ def callback():
         return "Token not found", 400
 
     # Process the callback data from POST request
-    callback_data = request.json  # Assuming the callback data is in JSON format
+    callback_data = request.args.to_dict(flat=False)  # Get all query parameters
 
     response_text = "Received Callback Data:\n"
-    response_text += str(callback_data) + "\n\n"
+    for key, values in callback_data.items():
+        response_text += f"{key}: {', '.join(values)}\n"
 
     print("Received Callback Data:")
     print(callback_data)
