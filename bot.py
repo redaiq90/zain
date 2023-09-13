@@ -1,7 +1,6 @@
-import json
 import jwt
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -12,11 +11,7 @@ def callback():
     except Exception:
         return "Token not found"
 
-    # Process the callback data from POST request
-    callback_data = request.json  # Assuming the callback data is in JSON format
-
-    print("Received Callback Data:")
-    print(json.dumps(callback_data, indent=2))
+    print(f"Received Token: {token}")
 
     # Replace 'your_secret_key_here' with your actual secret key
     secret = '$2y$10$hBbAZo2GfSSvyqAyV2SaqOfYewgYpfR1O19gIh4SqyGWdmySZYPuS'
@@ -27,7 +22,7 @@ def callback():
             result = dict(result)  # Convert to a dictionary
 
             print(f"Token: {token}")
-            print(json.dumps(result, indent=2))
+            print(result)
 
             if result.get('status') == 'success':
                 # Successful transaction
@@ -49,4 +44,4 @@ def callback():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
-    
+            
