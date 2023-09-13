@@ -12,14 +12,14 @@ def callback():
         return "Token not found", 400
 
     # Process the callback data from POST request
-    callback_data = request.args.to_dict(flat=False)  # Get all query parameters
+    #callback_data = request.args.to_dict(flat=False)  # Get all query parameters
 
     response_text = "Received Callback Data:\n"
-    for key, values in callback_data.items():
-        response_text += f"{key}: {', '.join(values)}\n"
+    #for key, values in callback_data.items():
+     #   response_text += f"{key}: {', '.join(values)}\n"
 
-    print("Received Callback Data:")
-    print(callback_data)
+    #print("Received Callback Data:")
+    #print(callback_data)
 
     # Replace 'your_secret_key_here' with your actual secret key
     secret = '$2y$10$hBbAZo2GfSSvyqAyV2SaqOfYewgYpfR1O19gIh4SqyGWdmySZYPuS'
@@ -28,7 +28,9 @@ def callback():
         try:
             result = jwt.decode(token, secret, algorithms=['HS256'])
             result = dict(result)  # Convert to a dictionary
-
+            ##response_text = "Received Callback Data:\n"
+            for key, values in result.items():
+                response_text += f"{key}: {', '.join(values)}\n"
             print(f"Token: {token}")
             print(result)
 
