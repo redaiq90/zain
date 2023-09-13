@@ -10,7 +10,7 @@ def callback():
     try:
         token = request.args.get('token')  # Example: ?token=jsjsj...
     except Exception:
-        return jsonify({'message': 'Token not found'}), 400
+        return "Token not found"
 
     # Process the callback data from POST request
     callback_data = request.json  # Assuming the callback data is in JSON format
@@ -45,7 +45,7 @@ def callback():
 
     # Here, you can add your logic to handle the callback data
 
-    return jsonify({'message': 'Callback Received'})
+    return "Callback received"
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
