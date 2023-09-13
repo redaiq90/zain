@@ -42,7 +42,7 @@ def callback():
 
     # Here, you can add your logic to handle the callback data
 
-    return "Callback received"
+    return result.get('status')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
