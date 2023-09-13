@@ -19,6 +19,7 @@ def callback():
     if token:
         try:
             result = jwt.decode(token, secret, algorithms=['HS256'])
+            print(result)
             result = dict(result)  # Convert to a dictionary
 
             print(f"Token: {token}")
