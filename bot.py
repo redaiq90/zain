@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/callback', methods=['POST'])
+@app.route('/callback', methods=['GET'])
 def callback():
     try:
         token = request.args.get('token')  # Example: ?token=jsjsj...
