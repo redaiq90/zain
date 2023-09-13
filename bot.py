@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 @app.route('/callback', methods=['GET'])
 def callback():
+    print("Connection....")
     try:
         token = request.args.get('token')  # Example: ?token=jsjsj...
     except Exception:
